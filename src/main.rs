@@ -30,29 +30,45 @@ fn main() {
     //     .get_result(&mut conn)
     //     .expect("insert failed");
 
-    let mut post_result = posts.load::<Post>(&mut conn).expect("query error");
+    // let mut post_result = posts.load::<Post>(&mut conn).expect("query error");
+    // for post in post_result {
+    //     println!("{:?}", post);
+    // }
+
+    // post_result = posts.limit(1).load::<Post>(&mut conn).expect("query error");
+    // for post in post_result {
+    //     println!("{:?}", post);
+    // }
+
+    // let specific_post_result = posts.select((title, body))
+    //     .load::<SpecificPost>(&mut conn)
+    //     .expect("query error");
+    // for post in specific_post_result {
+    //     println!("{:?}", post);
+    // }
+
+    // post_result = posts.order(id.desc()).limit(1).load::<Post>(&mut conn).expect("query error");
+    // for post in post_result {
+    //     println!("{:?}", post);
+    // }
+
+    let mut post_result = posts.filter(id.eq(5)).limit(1).load::<Post>(&mut conn).expect("query error");
     for post in post_result {
         println!("{:?}", post);
     }
 
-    post_result = posts.limit(1).load::<Post>(&mut conn).expect("query error");
-    for post in post_result {
-        println!("{:?}", post);
-    }
+    let mut post_update = diesel::update(posts.filter(id.eq(5)))
+        .set((
+            body.eq("Lorem ipsum"),
+            slug.eq("first-post")))
+        .get_result::<Post>(&mut conn)
+        .expect("update error");
+    post_update = diesel::update(posts.filter(id.eq(5)))
+        .set(slug.eq("primer-post"))
+        .get_result::<Post>(&mut conn)
+        .expect("update error");
 
-    let specific_post_result = posts.select((title, body))
-        .load::<SpecificPost>(&mut conn)
-        .expect("query error");
-    for post in specific_post_result {
-        println!("{:?}", post);
-    }
-
-    post_result = posts.order(id.desc()).limit(1).load::<Post>(&mut conn).expect("query error");
-    for post in post_result {
-        println!("{:?}", post);
-    }
-
-    post_result = posts.filter(id.eq(2)).limit(1).load::<Post>(&mut conn).expect("query error");
+    post_result = posts.filter(id.eq(5)).limit(1).load::<Post>(&mut conn).expect("query error");
     for post in post_result {
         println!("{:?}", post);
     }
