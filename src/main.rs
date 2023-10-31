@@ -52,24 +52,28 @@ fn main() {
     //     println!("{:?}", post);
     // }
 
-    let mut post_result = posts.filter(id.eq(5)).limit(1).load::<Post>(&mut conn).expect("query error");
-    for post in post_result {
-        println!("{:?}", post);
-    }
+    // let mut post_result = posts.filter(id.eq(5)).limit(1).load::<Post>(&mut conn).expect("query error");
+    // for post in post_result {
+    //     println!("{:?}", post);
+    // }
 
-    let mut post_update = diesel::update(posts.filter(id.eq(5)))
-        .set((
-            body.eq("Lorem ipsum"),
-            slug.eq("first-post")))
-        .get_result::<Post>(&mut conn)
-        .expect("update error");
-    post_update = diesel::update(posts.filter(id.eq(5)))
-        .set(slug.eq("primer-post"))
-        .get_result::<Post>(&mut conn)
-        .expect("update error");
+    // let mut post_update = diesel::update(posts.filter(id.eq(5)))
+    //     .set((
+    //         body.eq("Lorem ipsum"),
+    //         slug.eq("first-post")))
+    //     .get_result::<Post>(&mut conn)
+    //     .expect("update error");
+    // post_update = diesel::update(posts.filter(id.eq(5)))
+    //     .set(slug.eq("primer-post"))
+    //     .get_result::<Post>(&mut conn)
+    //     .expect("update error");
 
-    post_result = posts.filter(id.eq(5)).limit(1).load::<Post>(&mut conn).expect("query error");
-    for post in post_result {
-        println!("{:?}", post);
-    }
+    // post_result = posts.filter(id.eq(5)).limit(1).load::<Post>(&mut conn).expect("query error");
+    // for post in post_result {
+    //     println!("{:?}", post);
+    // }
+
+    diesel::delete(posts.filter(id.eq(5))).execute(&mut conn).expect("delete error");
+
+    diesel::delete(posts.filter(title.like("%-blog%"))).execute(&mut conn).expect("delete error");
 }
