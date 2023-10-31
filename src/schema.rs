@@ -1,7 +1,7 @@
 // @generated automatically by Diesel CLI.
 
 diesel::table! {
-    post (id) {
+    posts (id) {
         id -> Int4,
         title -> Varchar,
         slug -> Varchar,

@@ -1,6 +1,6 @@
 -- Your SQL goes here
 
-CREATE TABLE Post (
+CREATE TABLE posts (
     id SERIAL PRIMARY KEY,
     title VARCHAR NOT NULL,
     slug VARCHAR NOT NULL,
